@@ -1759,6 +1759,20 @@ class Dot
 	 */
 	public static function formatDate(object $date, bool $yearOnly = false, bool $abbr_month = false): string
 	{
+		if (!property_exists($date, 'qual1')) {
+			// A breaking change in newer webtrees versions removed Date::$qual1/$qual2
+			// and AbstractCalendarDate::format(), moving all date formatting (including
+			// GEDCOM date qualifiers such as ABT/CAL/EST/BET.../AND) into internal,
+			// per-language formatters. There is no supported way any more to reproduce
+			// GVExport's own compact qualifier styling (~, ±, &lt;, &gt;, ...) or a
+			// custom date format string, so delegate entirely to webtrees' own
+			// calendar- and language-aware formatting instead.
+			if ($yearOnly) {
+				return (string) $date->minimumDate()->year();
+			}
+			return $date->display();
+		}
+
 		$date_format = I18N::dateFormat();
 		if ($abbr_month) {
 			$date_format = str_replace('%F', '%M', $date_format);
