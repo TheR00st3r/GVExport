@@ -71,7 +71,7 @@ const Data = {
                 el.value = json;
                 form.appendChild(el);
                 document.getElementById("browser").value = "true";
-                let data = jQuery(form).serialize();
+                let data = new URLSearchParams(new FormData(form)).toString();
                 document.getElementById("browser").value = "false";
                 el.remove();
                 window.fetch(form.getAttribute('action'), {

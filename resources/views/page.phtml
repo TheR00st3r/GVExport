@@ -236,7 +236,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
             el.item(i).disabled = false;
         }
         // Get the form data
-        const data = jQuery(form).serialize();
+        const data = new URLSearchParams(new FormData(form)).toString();
         // Disable our fields again by indicating cart is enabled (only if items in cart)
         if (!cartempty && document.getElementById("usecart_yes").checked) {
             Form.toggleCart(true);
@@ -410,7 +410,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
     const mainPage = {};
 
     function runPageLoaded() {
-        if (typeof App.pageLoaded === 'function' && typeof jQuery === 'function') {
+        if (typeof App.pageLoaded === 'function') {
             Data.url.changeURLXref('<?= e($individual->xref()); ?>');
             App.pageLoaded();
         } else {
