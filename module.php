@@ -257,7 +257,7 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
                 $temp_dir = $this->saveDOTFile($tree, $vars_data);
             } catch (Exception $e) {
                 // Remove comments around $e below to get a proper error message. Ensure full error is not showing for prod.
-                return Registry::responseFactory()->response('Failed to generate file' /* . $e */, 406);
+                return Registry::responseFactory()->response('Failed to generate file' /* . $e */, self::httpStatusCode(406));
             }
             // If browser mode, output dot instead of selected file
             $file_type = isset($_POST["browser"]) && $_POST["browser"] == "true" ? "dot" : $vars_data["output_type"];
@@ -495,6 +495,24 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
             return $sex->value;
         }
         return (string) $sex;
+    }
+
+    /**
+     * A breaking change in newer webtrees versions changed
+     * ResponseFactory::response() to require a Fisharebest\Webtrees\Enums\HttpStatusCode
+     * enum for its status code parameter, instead of a plain int. This
+     * returns whichever type the installed webtrees version expects.
+     *
+     * @param int $code
+     * @return \Fisharebest\Webtrees\Enums\HttpStatusCode|int
+     */
+    static function httpStatusCode(int $code)
+    {
+        $enum = '\Fisharebest\Webtrees\Enums\HttpStatusCode';
+        if (class_exists($enum)) {
+            return $enum::from($code);
+        }
+        return $code;
     }
 }
 
