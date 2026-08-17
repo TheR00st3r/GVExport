@@ -40,7 +40,6 @@ spl_autoload_register(function ($class) {
 });
 
 use Exception;
-use Fig\Http\Message\StatusCodeInterface;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Contracts\UserInterface;
 use Fisharebest\Webtrees\Registry;
@@ -258,7 +257,7 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
                 $temp_dir = $this->saveDOTFile($tree, $vars_data);
             } catch (Exception $e) {
                 // Remove comments around $e below to get a proper error message. Ensure full error is not showing for prod.
-                return Registry::responseFactory()->response('Failed to generate file' /* . $e */, StatusCodeInterface::STATUS_NOT_ACCEPTABLE);
+                return Registry::responseFactory()->response('Failed to generate file' /* . $e */, 406);
             }
             // If browser mode, output dot instead of selected file
             $file_type = isset($_POST["browser"]) && $_POST["browser"] == "true" ? "dot" : $vars_data["output_type"];
