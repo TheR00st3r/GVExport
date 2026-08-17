@@ -612,7 +612,7 @@ class Person
     {
         switch ($option) {
             case 0:
-            default;
+            default:
                 return false;
             case Person::TILE_SHAPE_ROUNDED:
                 return true;
