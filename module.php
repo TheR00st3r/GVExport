@@ -238,7 +238,7 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
     {
         return response(
             file_get_contents($this->resourcesFolder() . 'javascript' . DIRECTORY_SEPARATOR . 'gvexport.js'),
-            200,
+            self::httpStatusCode(200),
             ['content-type' => 'text/javascript']
         );
     }
