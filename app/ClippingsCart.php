@@ -122,7 +122,7 @@ class ClippingsCart
 
 		// group and sort the records
 		uasort($records, static function (GedcomRecord $x, GedcomRecord $y): int {
-			return $x->tag() <=> $y->tag() ?: GedcomRecord::nameComparator()($x, $y);
+			return $x->tag() <=> $y->tag() ?: GVExport::compareRecordNames($x, $y);
 		});
 
 		return $records;

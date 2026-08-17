@@ -517,6 +517,34 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
         }
         return $code;
     }
+
+    /**
+     * A breaking change in newer webtrees versions removed
+     * GedcomRecord::nameComparator() (a static factory returning a sort
+     * closure) in favour of comparing GedcomRecord::sortName() strings
+     * directly. This reproduces the exact same comparator logic on both
+     * old and new webtrees versions.
+     *
+     * @param \Fisharebest\Webtrees\GedcomRecord $x
+     * @param \Fisharebest\Webtrees\GedcomRecord $y
+     * @return int
+     */
+    static function compareRecordNames($x, $y): int
+    {
+        if ($x->canShowName()) {
+            if ($y->canShowName()) {
+                if (method_exists(I18N::class, 'compare')) {
+                    return I18N::compare($x->sortName(), $y->sortName());
+                }
+                return I18N::comparator()($x->sortName(), $y->sortName());
+            }
+            return -1;
+        }
+        if ($y->canShowName()) {
+            return 1;
+        }
+        return 0;
+    }
 }
 
 $moduleService = GVExport::getClass(ModuleService::class);
