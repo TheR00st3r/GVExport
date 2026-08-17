@@ -480,6 +480,23 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
             return app($class);
         }
     }
+
+    /**
+     * A breaking change in newer webtrees versions changed Individual::sex()
+     * to return a Fisharebest\Webtrees\Enums\Sex enum instead of a plain
+     * string. This normalises the result back to a string ('M', 'F', 'X',
+     * or 'U') so it works on both old and new webtrees versions.
+     *
+     * @param mixed $sex
+     * @return string
+     */
+    static function sexToString($sex): string
+    {
+        if ($sex instanceof \Fisharebest\Webtrees\Enums\Sex) {
+            return $sex->value;
+        }
+        return (string) $sex;
+    }
 }
 
 $moduleService = GVExport::getClass(ModuleService::class);

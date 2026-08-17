@@ -73,7 +73,7 @@ class Person
         }
         switch ($this->dot->settings['border_col_type']) {
             case Settings::OPTION_BORDER_SEX_COLOUR:
-                $border_colour = $this->dot->getGenderColour($i ? $i->sex() : 'U', $related);
+                $border_colour = $this->dot->getGenderColour($i ? GVExport::sexToString($i->sex()) : 'U', $related);
                 break;
             case Settings::OPTION_BORDER_CUSTOM_COLOUR:
                 $border_colour = $this->dot->settings["indi_border_col"];
@@ -115,10 +115,10 @@ class Person
 
         $i = $this->dot->getUpdatedPerson($pid);
         // Get the personal data
-        $sex_colour = $this->dot->getGenderColour($i ? $i->sex() : 'U', $related);
+        $sex_colour = $this->dot->getGenderColour($i ? GVExport::sexToString($i->sex()) : 'U', $related);
         switch ($this->dot->settings['border_col_type']) {
             case Settings::OPTION_BORDER_SEX_COLOUR:
-                $border_colour = $this->dot->getGenderColour($i ? $i->sex() : 'U', $related);
+                $border_colour = $this->dot->getGenderColour($i ? GVExport::sexToString($i->sex()) : 'U', $related);
                 break;
             case Settings::OPTION_BORDER_CUSTOM_COLOUR:
                 $border_colour = $this->dot->settings["indi_border_col"];
@@ -280,7 +280,7 @@ class Person
                     $indi_bg_colour = $this->dot->settings["indi_background_col"];
                     break;
                 case Settings::OPTION_BACKGROUND_SEX_COLOUR:
-                    $indi_bg_colour = $this->dot->getGenderColour($i ? $i->sex() : 'U', $related);
+                    $indi_bg_colour = $this->dot->getGenderColour($i ? GVExport::sexToString($i->sex()) : 'U', $related);
                     break;
                 case Settings::OPTION_BACKGROUND_VITAL_COLOUR:
                     $indi_bg_colour = $this->getVitalColour($i ? $i->isDead() : false, Settings::OPTION_BACKGROUND_VITAL_COLOUR);
@@ -552,7 +552,7 @@ class Person
      */
     private function getSexFull(?Individual $i): string
     {
-        switch ($i->sex()) {
+        switch (GVExport::sexToString($i->sex())) {
             case 'F':
                 return I18N::translate('Female');
             case 'M':
@@ -617,7 +617,7 @@ class Person
             case Person::TILE_SHAPE_ROUNDED:
                 return true;
             case Person::TILE_SHAPE_SEX:
-                switch ($i->sex()) {
+                switch (GVExport::sexToString($i->sex())) {
                     case 'M':
                         return $this->shouldBeRounded($i, $this->dot->settings['shape_sex_male']);
                     case 'F':

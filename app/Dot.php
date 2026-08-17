@@ -1067,10 +1067,10 @@ class Dot
 				// -------------
 
 				$families["F_$pid"]["has_parents"] = TRUE;
-				if ($i->sex() == "M") {
+				if (GVExport::sexToString($i->sex()) == "M") {
 					$families["F_$pid"]["husb_id"] = $pid;
 					$families["F_$pid"]["wife_id"] = "";
-				} elseif ($i->sex() == "F") {
+				} elseif (GVExport::sexToString($i->sex()) == "F") {
 					$families["F_$pid"]["wife_id"] = $pid;
 					$families["F_$pid"]["husb_id"] = "";
 				} else {

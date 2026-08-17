@@ -105,13 +105,13 @@ class ClippingsCartListEnhancer
 		$this->addFamToList(Dot::DUMMY_FAMILIY_XREF . $pid);
 		$this->individuals[$pid]['fams'][Dot::DUMMY_FAMILIY_XREF . $pid] = Dot::DUMMY_FAMILIY_XREF . $pid;
 		$this->families[Dot::DUMMY_FAMILIY_XREF . $pid][Dot::HAS_PARENTS] = true;
-		if ($individual->sex() == "M") {
+		if (GVExport::sexToString($individual->sex()) == "M") {
 			$this->families[Dot::DUMMY_FAMILIY_XREF . $pid][Dot::ID_HUSBAND] = $pid;
 			$this->families[Dot::DUMMY_FAMILIY_XREF . $pid][Dot::ID_WIFE] = "";
-		} elseif ($individual->sex() == "F") {
+		} elseif (GVExport::sexToString($individual->sex()) == "F") {
 			$this->families[Dot::DUMMY_FAMILIY_XREF . $pid][Dot::ID_WIFE] = $pid;
 			$this->families[Dot::DUMMY_FAMILIY_XREF . $pid][Dot::ID_HUSBAND] = "";
-		} elseif ($individual->sex() == "X") {
+		} elseif (GVExport::sexToString($individual->sex()) == "X") {
 			$this->families[Dot::DUMMY_FAMILIY_XREF . $pid][Dot::ID_UNKNOWN] = $pid;
 			$this->families[Dot::DUMMY_FAMILIY_XREF . $pid][Dot::ID_WIFE] = "";
 			$this->families[Dot::DUMMY_FAMILIY_XREF . $pid][Dot::ID_HUSBAND] = "";
