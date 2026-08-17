@@ -55,6 +55,7 @@ use Fisharebest\Webtrees\Module\ModuleChartTrait;
 use Fisharebest\Webtrees\Module\ModuleConfigInterface;
 use Fisharebest\Webtrees\Module\ModuleConfigTrait;
 use Fisharebest\Webtrees\FlashMessages;
+use Fisharebest\Webtrees\Http\RequestHandlers\ModuleAction;
 use Fisharebest\Webtrees\Menu;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Validator;
@@ -125,7 +126,7 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
 
     public function chartUrl(Individual $individual, array $parameters = []): string
     {
-        return route('module', array_merge($parameters, [
+        return route(ModuleAction::class, array_merge($parameters, [
             'module' => $this->name(),
             'action' => 'Chart',
             'xref' => $individual->xref(),
