@@ -256,10 +256,11 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
             try {
                 $temp_dir = $this->saveDOTFile($tree, $vars_data);
             } catch (Exception $e) {
-                // Full error is logged to the control panel (Administration > Website > Logs)
-                // rather than shown to the user, to avoid leaking server details.
                 \Fisharebest\Webtrees\Log::addErrorLog('GVExport: failed to generate file: ' . $e);
-                return Registry::responseFactory()->response('Failed to generate file', self::httpStatusCode(406));
+                // TEMPORARY: also return the real message to the browser to aid debugging
+                // an in-progress webtrees compatibility issue. Revert to a generic message
+                // once resolved, to avoid leaking server details to end users.
+                return Registry::responseFactory()->response('Failed to generate file: ' . $e->getMessage(), self::httpStatusCode(406));
             }
             // If browser mode, output dot instead of selected file
             $file_type = isset($_POST["browser"]) && $_POST["browser"] == "true" ? "dot" : $vars_data["output_type"];
