@@ -112,6 +112,8 @@ class Person
         $birthplace = "";
         $burial_place = "";
         $burial_date = "";
+        $birthdate = "";
+        $death_date = "";
 
         $i = $this->dot->getUpdatedPerson($pid);
         // Get the personal data
